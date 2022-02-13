@@ -1,2 +1,2 @@
 # PC2GPUBenchmarks.jl
-Hosting the Documentation of SubmatrixMethod.jl using GitHub Pages
+The only purpose of this repo is to host the documentation of PC2GPUBenchmarks.jl (on GitLab) using GitHub pages.
