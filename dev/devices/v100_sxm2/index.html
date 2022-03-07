@@ -17,7 +17,9 @@ julia&gt; peakflops_gpu_fmas(; dtype=Float64);
 Peakflops (TFLOP/s):
  └ max: 7.74
 
-# TODO: peakflops_gpu_wmmas</code></pre><h2 id="Memory-bandwidth"><a class="docs-heading-anchor" href="#Memory-bandwidth">Memory bandwidth</a><a id="Memory-bandwidth-1"></a><a class="docs-heading-anchor-permalink" href="#Memory-bandwidth" title="Permalink"></a></h2><pre><code class="language-julia hljs">julia&gt; saxpy_gpu();
+julia&gt; peakflops_gpu_wmmas(; dtype=Float16)
+Peakflops (TFLOP/s):
+ └ max: 116.39</code></pre><h2 id="Memory-bandwidth"><a class="docs-heading-anchor" href="#Memory-bandwidth">Memory bandwidth</a><a id="Memory-bandwidth-1"></a><a class="docs-heading-anchor-permalink" href="#Memory-bandwidth" title="Permalink"></a></h2><pre><code class="language-julia hljs">julia&gt; saxpy_gpu();
 Memory Bandwidth (GiB/s):
  └ max: 719.75
 
@@ -48,13 +50,15 @@ Bandwidth (GiB/s):
  └ std_dev: 0.18
 
 julia&gt; bench_p2p_memcpy_all()
-4_4 Matrix{Union{Nothing, Float64}}:
-   nothing  22.5271    45.0001    22.5397
- 22.4658      nothing  22.5367    45.0019
- 44.8683    22.5371      nothing  45.0036
- 22.5005    44.9879    44.9949      nothing
-
- # TODO: too low?</code></pre><h2 id="GPU-information"><a class="docs-heading-anchor" href="#GPU-information">GPU information</a><a id="GPU-information-1"></a><a class="docs-heading-anchor-permalink" href="#GPU-information" title="Permalink"></a></h2><pre><code class="language-julia hljs">julia&gt; gpuinfo()
+8_8 Matrix{Union{Nothing, Float64}}:
+   nothing  22.5406    45.0071    22.5367    44.9879     8.11161    8.0912     8.09942
+ 22.4844      nothing  22.5393    44.9706     8.11274   45.0036     8.08732    8.10026
+ 44.7958    22.5406      nothing  45.0158     8.10381    8.11014   22.5406     7.39972
+ 22.5301    45.0088    45.0001      nothing   7.428      8.10646    8.08204   22.5401
+ 44.9897     7.14454    7.14674    7.14906     nothing  22.5371    44.9723    22.538
+  6.63411   44.9966     7.14542    7.14467   22.5371      nothing  22.5362    44.9949
+  7.75585    7.75844   22.5375     8.10314   44.9966    22.5353      nothing  44.9984
+  7.75575    7.75911    8.10116   22.5371    22.5367    44.9966    44.9914      nothing</code></pre><h2 id="GPU-information"><a class="docs-heading-anchor" href="#GPU-information">GPU information</a><a id="GPU-information-1"></a><a class="docs-heading-anchor-permalink" href="#GPU-information" title="Permalink"></a></h2><pre><code class="language-julia hljs">julia&gt; gpuinfo()
 CUDA toolkit 11.6, local installation
 NVIDIA driver 510.47.3, for CUDA 11.6
 CUDA driver 11.6
@@ -79,11 +83,15 @@ Toolchain:
 Environment:
 - JULIA_CUDA_USE_BINARYBUILDER: false
 
-4 devices:
+8 devices:
   0: Tesla V100-SXM2-32GB (sm_70, 31.449 GiB / 32.000 GiB available)
   1: Tesla V100-SXM2-32GB (sm_70, 31.745 GiB / 32.000 GiB available)
   2: Tesla V100-SXM2-32GB (sm_70, 31.745 GiB / 32.000 GiB available)
   3: Tesla V100-SXM2-32GB (sm_70, 31.745 GiB / 32.000 GiB available)
+  4: Tesla V100-SXM2-32GB (sm_70, 31.745 GiB / 32.000 GiB available)
+  5: Tesla V100-SXM2-32GB (sm_70, 31.745 GiB / 32.000 GiB available)
+  6: Tesla V100-SXM2-32GB (sm_70, 31.745 GiB / 32.000 GiB available)
+  7: Tesla V100-SXM2-32GB (sm_70, 31.745 GiB / 32.000 GiB available)
 
 julia&gt; gpuinfo(0)
 Device: Tesla V100-SXM2-32GB (CuDevice(0))
@@ -126,15 +134,23 @@ Compute mode: Default (multiple host threads can use ::cudaSetDevice() with devi
 
 julia&gt; gpuinfo_p2p_access()
 P2P Access Supported:
-4_4 Matrix{Bool}:
- 0  1  1  1
- 1  0  1  1
- 1  1  0  1
- 1  1  1  0
+8_8 Matrix{Bool}:
+ 0  1  1  1  1  1  1  1
+ 1  0  1  1  1  1  1  1
+ 1  1  0  1  1  1  1  1
+ 1  1  1  0  1  1  1  1
+ 1  1  1  1  0  1  1  1
+ 1  1  1  1  1  0  1  1
+ 1  1  1  1  1  1  0  1
+ 1  1  1  1  1  1  1  0
 
 P2P Atomic Supported:
-4_4 Matrix{Bool}:
- 0  1  1  1
- 1  0  1  1
- 1  1  0  1
- 1  1  1  0</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../a100_sxm2/">« A100 SXM2</a><a class="docs-footer-nextpage" href="../geforce_gtx_1650/">GeForce GTX 1650 »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.14 on <span class="colophon-date" title="Monday 7 March 2022 10:36">Monday 7 March 2022</span>. Using Julia version 1.7.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+8_8 Matrix{Bool}:
+ 0  1  1  1  1  0  0  0
+ 1  0  1  1  0  1  0  0
+ 1  1  0  1  0  0  1  0
+ 1  1  1  0  0  0  0  1
+ 1  0  0  0  0  1  1  1
+ 0  1  0  0  1  0  1  1
+ 0  0  1  0  1  1  0  1
+ 0  0  0  1  1  1  1  0</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../a100_sxm2/">« A100 SXM2</a><a class="docs-footer-nextpage" href="../geforce_gtx_1650/">GeForce GTX 1650 »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.14 on <span class="colophon-date" title="Monday 7 March 2022 14:48">Monday 7 March 2022</span>. Using Julia version 1.7.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
